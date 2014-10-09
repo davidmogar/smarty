@@ -1,0 +1,40 @@
+extends layout
+
+block content
+  div.jumbotron
+    div.container
+      h1 #{__('welcomeprofileheading')}
+      p #{__('welcomeprofileheading', user.local.email)}
+
+  div.container
+    form.form-horizontal(name='question', action='/users/exam', method='get', role='form')
+      div.form-group
+        label.col-sm-2.control-label(for='quesitons') #{__('numberquestions')}:
+        div.col-sm-8
+          input.form-control(type='number', name='questions', min='1', value='1')
+      div.form-group
+        label.col-sm-2.control-label(for='tags') #{__('tags')}:
+        div.col-sm-8
+          input.form-control(type='tags', name='tags')
+      div.form-group
+        label.col-sm-2.control-label(for='lang') #{__('language')}:
+        div.col-sm-8
+          select.form-control(name="lang")
+            option(value="en", selected="true") #{__('english')}
+            option(value="es") #{__('spanish')}
+      div.col-sm-offset-2.col-sm-8
+        button.btn.btn-default(type='submit') #{__('generate_exam')}
+
+  div.container
+    h1 #{__('yourexams')}
+    if exams
+      each val, index in exams
+        div.panel.panel-default.exam-panel
+          div.panel-heading #{__('exam')} #{index + 1}
+          div.panel-body
+            ul
+              li #{__('date')}: #{val.date}
+              li #{__('score')}: #{val.score}
+              li #{__('questions')}:
+                each question, index in val.questions
+                  a(href='/questions/#{question}') #{index + 1}

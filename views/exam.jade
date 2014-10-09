@@ -1,0 +1,40 @@
+extends layout
+
+block content
+  div.jumbotron
+    div.container
+      h1 #{__('welcomeexamheading')}
+      p.
+        #{__('welcomeexam', user.local.email)}
+
+  div.container
+    form.form-horizontal(name='exam', action='/users/exam', method='post', role='form')
+      if questions
+        each val, index in questions
+          div.panel.panel-default
+            div.panel-heading #{__('question')} #{index + 1}
+            div.panel-body
+              p #{val.text}
+              case val.type
+                when 'multichoice'
+                  div.form-group
+                    div.col-sm-12
+                      each answer in val.answers
+                        label.radio
+                          input(type='radio', name='#{val._id}', value="#{answer._id}")
+                          | #{answer.text}
+                when 'truefalse'
+                  div.form-group
+                    div.col-sm-12
+                      label.radio-inline
+                        input(type='radio', name='#{val._id}', value='true')
+                        | #{__('true')}
+                      label.radio-inline
+                        input(type='radio', name='#{val._id}', value='false')
+                        | #{__('false')}
+                when 'numerical'
+                  div.form-group
+                    div.col-sm-2
+                      input.form-control(type='number', name='#{val._id}')
+
+      button.btn.btn-lg.btn-primary(type='submit', style='margin-left: -15px;') #{__('send')}

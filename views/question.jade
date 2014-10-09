@@ -1,0 +1,69 @@
+extends layout
+
+block content
+  div.container
+    h1 #{__('editquestion')}
+    form.form-horizontal(name='question', action='/questions/#{question._id}/edit', method='post', role='form')
+      div.form-group
+        label.col-sm-2.control-label(for='text') #{__('text')}:
+        div.col-sm-8
+          input.form-control(type='text', name='text', value="#{question.text}")
+      div.form-group
+        label.col-sm-2.control-label(for='type') #{__('type')}:
+        div.col-sm-8
+          select.form-control(name="type")
+            if question.type == 'multichoice'
+              option(value="multichoice", selected) #{__('multichoice')}
+            else
+              option(value="multichoice") #{__('multichoice')}
+
+            if question.type == 'truefalse'
+              option(value="truefalse", selected) #{__('truefalse')}
+            else
+              option(value="truefalse") #{__('truefalse')}
+
+            if question.type == 'numerical'
+              option(value="numerical", selected) #{__('numerical')}
+            else
+              option(value="numerical") #{__('numerical')}
+      div.form-group
+        label.col-sm-2.control-label(for='lang') #{__('language')}:
+        div.col-sm-8
+          select.form-control(name="lang")
+            if question.language == 'en'
+              option(value="en", selected) #{__('english')}
+            else
+              option(value="en") #{__('english')}
+            if question.language == 'es'
+              option(value="es", selected) #{__('spanish')}
+            else
+              option(value="es") #{__('spanish')}
+      div.col-sm-offset-2.col-sm-8
+        button.btn.btn-default(type='submit') #{__('editquestion')}
+
+    div.row
+      div.col-md-7
+        h1 #{__('answers')}
+        table.table.table-bordered
+          tr
+            th #{__('text')}
+            th #{__('score')}
+          if answers
+            each val, index in answers
+              tr
+                td #{val.text}
+                td #{val.score}
+
+      div.col-md-5
+        h1 #{__('addnewanswer')}
+        form.form-horizontal(name='question', action='/questions/#{question._id}/answer', method='post', role='form')
+          div.form-group
+            label.col-sm-2.control-label(for='text') #{__('text')}:
+            div.col-sm-8
+              input.form-control(type='text', name='text')
+          div.form-group
+            label.col-sm-2.control-label(for='score') #{__('score')}:
+            div.col-sm-8
+              input.form-control(type='number', name='score', min='0', max='100' value='0')
+          div.col-sm-offset-2.col-sm-8
+            button.btn.btn-default(type='submit') #{__('addanswer')}

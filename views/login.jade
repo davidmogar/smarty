@@ -1,0 +1,14 @@
+extends layout
+
+block content
+  div.container
+    form.form-signin(name='login', action='/login', method='post')
+      h1.form-signin-heading #{__('signinheading')}
+      if message.length > 0
+        div.alert.alert-danger
+          strong #{__('oh_snap')}
+          span #{message}
+
+      input.form-control(type='text', name='email', placeholder="#{__('email')}")
+      input.form-control(type='password', name='password', placeholder="#{__('password')}")
+      button.btn.btn-lg.btn-primary.btn-block(type='submit') #{__('login')}
