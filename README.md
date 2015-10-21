@@ -3,7 +3,7 @@ Smarty
 
 Smarty is a simple nodejs application to learn a little about this runtime.
 
-![Smarty](http://davidmogar.com/uploads/github/smarty.png)
+![Smarty](http://davidmogar.leakedbits.com/uploads/github/smarty.png)
 
 The app has the following features:
 - Generate random tests in different formats (HTML, XML and JSON) through post request.
